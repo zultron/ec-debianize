@@ -3,3 +3,4 @@
 30_fix_r8169-3.4-ethercat_typo.dpatch
 31_add_kernel-3.5.7_drivers.dpatch
 40_xenomai_include.dpatch
+50_install_headers.dpatch

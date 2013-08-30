@@ -1,0 +1,20 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 50_install_headers.dpatch by John Morris <john@zultron.com>
+##
+## Install these in /usr/include/ethercat rather than /usr/include so
+## that kbuild doesn't need to add '-I/usr/include' to CFLAGS!
+
+@DPATCH@
+
+diff -up ./include/Makefile.am.xenomai_include ./include/Makefile.am
+--- ./include/Makefile.am.xenomai_include	2012-09-19 12:57:48.000000000 -0500
++++ ./include/Makefile.am	2013-08-30 15:43:53.000000000 -0500
+@@ -31,7 +31,7 @@
+ #
+ #------------------------------------------------------------------------------
+ 
+-include_HEADERS = \
++pkginclude_HEADERS = \
+ 	ecrt.h \
+ 	ectty.h
+ 
