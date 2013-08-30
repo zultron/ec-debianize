@@ -22,14 +22,27 @@ top_srcdir:=$(shell pwd)
 tmp:=debian/tmp
 tmp_absolute:=$(top_srcdir)/$(tmp)
 extras:=debian/@EXTRAS@
+rtflavor:=@RTFLAVOR@
 
 configure: configure-stamp
 configure-stamp: patch-stamp
 	dh_testdir
+	autoreconf -i
+ifeq ($(rtflavor),xenomai)
 	./configure \
 		--prefix=/usr --sysconfdir=/etc --localstatedir=/var \
-		--with-rtai-dir=@RTAI_PATH@ --with-linux-dir=/@KERNEL_BUILDDIR@ \
-		--enable-8139too --enable-e100 --enable-e1000 --enable-e1000e --enable-r8169
+		--with-xenomai \
+		--with-linux-dir=/@KERNEL_BUILDDIR@ \
+		--enable-8139too --enable-e100 --enable-e1000 \
+		--enable-e1000e --enable-r8169
+else
+	./configure \
+		--prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+		--with-rtai-dir=@RTAI_PATH@ \
+		--with-linux-dir=/@KERNEL_BUILDDIR@ \
+		--enable-8139too --enable-e100 --enable-e1000 \
+		--enable-e1000e --enable-r8169
+endif
 	touch $@
 
 build: build-stamp
@@ -59,8 +72,8 @@ install: build
 
 	cp -dR $(extras)/* $(tmp)
 
-	mkdir -p $(tmp)/usr/realtime-@KERNEL_VERSION@/modules/ethercat
-	cp Module.symvers $(tmp)/usr/realtime-@KERNEL_VERSION@/modules/ethercat
+	mkdir -p $(tmp)/lib/modules/@KERNEL_VERSION@/ethercat/
+	cp Module.symvers $(tmp)/lib/modules/@KERNEL_VERSION@/ethercat/
 
 	dh_install --sourcedir=$(tmp)
 

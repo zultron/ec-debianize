@@ -56,7 +56,9 @@ fi
 TARGET=$1
 
 RTAI_PATH=/usr/realtime-$1
-KERNEL_DEPENDS="linux-image-$1, rtai-modules-$1"
+XENOMAI_PATH=/usr/share/libxenomai-dev/examples
+RTFLAVOR=rtai
+KERNEL_DEPENDS="linux-image-$1"
 KERNEL_HEADERS=linux-headers-$1
 KERNEL_VERSION=$1
 KERNEL_PATH=lib/modules/$1
@@ -92,14 +94,29 @@ case $TARGET in
         KERNEL_HEADERS=$KERNEL_HEADERS,gcc-4.2
     ;;
     2.6.32-122-rtai)
-        KERNEL_HEADERS=$KERNEL_HEADERS,gcc-4.4
+        KERNEL_HEADERS="$KERNEL_HEADERS, gcc (>= 4.4)"
+    ;;
+    3.5.7-xenomai-2.6.2.1)
+        KERNEL_HEADERS="$KERNEL_HEADERS, gcc (>= 4.4)"
+	RTFLAVOR=xenomai
     ;;
     *)
 	echo "your kernel '$TARGET' is not known. There might be needed dependencies which won't get set automatically."
 esac
 
+case $RTFLAVOR in
+    rtai)
+	KERNEL_DEPENDS="$KERNEL_DEPENDS, rtai-modules-$1"
+	;;
+    *)
+	: # any extra deps here?
+	;;
+esac
+	
+
 subst () {
 sed -e "s|@RTAI_PATH@|$RTAI_PATH|g" \
+    -e "s|@XENOMAI_PATH@|$XENOMAI_PATH|g" \
     -e "s|@KERNEL_VERSION@|$KERNEL_VERSION|g" \
     -e "s|@KERNEL_DEPENDS@|$KERNEL_DEPENDS|g" \
     -e "s|@KERNEL_HEADERS@|$KERNEL_HEADERS|g" \
@@ -109,6 +126,7 @@ sed -e "s|@RTAI_PATH@|$RTAI_PATH|g" \
     -e "s|@EXTRAS@|$EXTRAS|g" \
     -e "s|@DISTRIB_NAME@|$DISTRIB_NAME|g" \
     -e "s|@TARGET@|$TARGET|g" \
+    -e "s|@RTFLAVOR@|$RTFLAVOR|g" \
     $*
 }
 
@@ -120,5 +138,6 @@ done
 chmod +x rules
 
 rm -f ../build-stamp
-echo "successfully configured for '$DISTRIB_NAME'-'$TARGET'.."
+echo "successfully configured for '$DISTRIB_NAME'-'$TARGET'
+	($RTFLAVOR threads)"
 
