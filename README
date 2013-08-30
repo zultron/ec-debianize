@@ -29,10 +29,9 @@ Ubuntu 10.04 "Lucid Lynx".
 
 4. build the packages (very similar to the LinuxCNC build process)
    # cd ethercat-1.5.2
-   # cd debian
-   # ./configure -a
-   # cd ..
-   # dpkg-checkbuilddeps (and install missing deps)
+   # chmod +x debian/configure
+   # debian/configure -a  # optionally, replace '-a' with the kernel version
+   # dpkg-checkbuilddeps  # (and install missing deps)
    # dpkg-buildpackage
 
 
