@@ -3,4 +3,5 @@
 30_fix_r8169-3.4-ethercat_typo.dpatch
 31_add_kernel-3.5.7_drivers.dpatch
 32_add_kernel-3.8.13_drivers.patch
+40_RTAI_module_cflags.patch
 50_install_headers.dpatch

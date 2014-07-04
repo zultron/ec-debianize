@@ -1,0 +1,102 @@
+Rationalize RTAI configuration
+
+The autoconf configuration script assumes that RTAI is built in the
+source tree, and there exists an 'RTAI_DIR' containing
+e.g. include/rtai_sched.h.
+
+This patch replaces the '--with-rtai-dir' argument with
+'--with-rtai-config', and instead of assuming the location of RTAI
+headers relative to an 'RTAI_DIR', grabs the entire list of kbuild
+EXTRA_CFLAGS from `rtai-config`.
+
+diff -up ./configure.ac.rtai_headers_dir ./configure.ac
+--- ./configure.ac.rtai_headers_dir	2014-07-03 22:20:04.000000000 -0500
++++ ./configure.ac	2014-07-04 00:17:40.457203792 -0500
+@@ -486,36 +486,37 @@ AC_SUBST(KERNEL_R8169,[$kernel_r8169])
+ # RTAI path (optional)
+ #------------------------------------------------------------------------------
+ 
+-AC_ARG_WITH([rtai-dir],
++AC_ARG_WITH([rtai-config],
+     AC_HELP_STRING(
+-        [--with-rtai-dir=<DIR>],
+-        [RTAI path, for RTDM interface and RTAI examples]
++        [--with-rtai-config=<FILE>],
++        [RTAI configuration utility path, for RTDM interface and RTAI examples]
+     ),
+     [
+-        rtaidir=[$withval]
++        rtaiconfig=[$withval]
+         rtai=1
+     ],
+     [
+-        rtaidir=""
++        rtaiconfig=""
+         rtai=0
+     ]
+ )
+ 
+-AC_MSG_CHECKING([for RTAI path])
++AC_MSG_CHECKING([for RTAI configuration utility])
+ 
+-if test -z "${rtaidir}"; then
++if test -z "${rtaiconfig}"; then
+     AC_MSG_RESULT([not specified.])
++elif ! test -x ${rtaiconfig}; then
++    AC_MSG_RESULT([not found])
++    AC_MSG_ERROR(["${rtaiconfig}" not executable])
+ else
+-    if test \! -r ${rtaidir}/include/rtai.h; then
+-        AC_MSG_ERROR([no RTAI installation found in ${rtaidir}!])
+-    fi
+-    AC_MSG_RESULT([$rtaidir])
++    AC_MSG_RESULT([$rtaiconfig])
+ 
+-    rtai_lxrt_cflags=`$rtaidir/bin/rtai-config --lxrt-cflags`
+-    rtai_lxrt_ldflags=`$rtaidir/bin/rtai-config --lxrt-ldflags`
++    rtai_extra_cflags="$(${rtaiconfig} --module-cflags)"
++    rtai_lxrt_cflags=`${rtaiconfig} --lxrt-cflags`
++    rtai_lxrt_ldflags=`${rtaiconfig} --lxrt-ldflags`
+ fi
+ 
+-AC_SUBST(RTAI_DIR,[$rtaidir])
++AC_SUBST(RTAI_EXTRA_CFLAGS,[$rtai_extra_cflags])
+ AM_CONDITIONAL(ENABLE_RTAI, test "x$rtai" = "x1")
+ AC_SUBST(ENABLE_RTAI,[$rtai])
+ 
+diff -up ./examples/dc_rtai/Kbuild.in.rtai_headers_dir ./examples/dc_rtai/Kbuild.in
+--- ./examples/dc_rtai/Kbuild.in.rtai_headers_dir	2014-07-04 00:05:59.325203207 -0500
++++ ./examples/dc_rtai/Kbuild.in	2014-07-04 00:14:08.773203615 -0500
+@@ -35,7 +35,7 @@ obj-m := ec_dc_rtai_sample.o
+ 
+ ec_dc_rtai_sample-objs := dc_rtai_sample.o
+ 
+-EXTRA_CFLAGS := -I@RTAI_DIR@/include
++EXTRA_CFLAGS := @RTAI_EXTRA_CFLAGS@
+ 
+ KBUILD_EXTRA_SYMBOLS := \
+ 	@abs_top_builddir@/$(LINUX_SYMVERS) \
+diff -up ./examples/rtai/Kbuild.in.rtai_headers_dir ./examples/rtai/Kbuild.in
+--- ./examples/rtai/Kbuild.in.rtai_headers_dir	2014-07-04 00:04:54.329203153 -0500
++++ ./examples/rtai/Kbuild.in	2014-07-04 00:14:23.445203627 -0500
+@@ -35,7 +35,7 @@ obj-m := ec_rtai_sample.o
+ 
+ ec_rtai_sample-objs := rtai_sample.o
+ 
+-EXTRA_CFLAGS := -I@RTAI_DIR@/include
++EXTRA_CFLAGS := @RTAI_EXTRA_CFLAGS@
+ 
+ KBUILD_EXTRA_SYMBOLS := \
+ 	@abs_top_builddir@/$(LINUX_SYMVERS) \
+diff -up ./master/Kbuild.in.rtai_headers_dir ./master/Kbuild.in
+--- ./master/Kbuild.in.rtai_headers_dir	2014-07-03 22:20:14.000000000 -0500
++++ ./master/Kbuild.in	2014-07-04 00:14:34.309203637 -0500
+@@ -89,7 +89,7 @@ CFLAGS_rtdm.o := -I@XENOMAI_DIR@/include
+ endif
+ 
+ ifeq (@ENABLE_RTAI@, 1)
+-CFLAGS_rtdm.o := -I@RTAI_DIR@/include
++CFLAGS_rtdm.o := @RTAI_EXTRA_CFLAGS@
+ endif
+ 
+ ec_master-objs += rtdm-ioctl.o
