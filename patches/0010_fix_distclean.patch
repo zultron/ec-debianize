@@ -1,10 +1,6 @@
-#! /bin/sh /usr/share/dpatch/dpatch-run
-## 10_fix_distclean.dpatch by  <cncmill@cncmill>
-##
-## All lines beginning with `## DP:' are a description of the patch.
-## DP: fix make distclean problem
+0010_fix_distclean.patch by  <cncmill@cncmill>
 
-@DPATCH@
+fix make distclean problem
 
 diff -urNp ethercat-1.5.1.orig/devices/e1000/Makefile.am ethercat-1.5.1/devices/e1000/Makefile.am
 --- ethercat-1.5.1.orig/devices/e1000/Makefile.am	2012-01-30 15:26:19.000000000 +0100

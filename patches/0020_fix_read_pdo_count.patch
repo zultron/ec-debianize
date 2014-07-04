@@ -1,10 +1,6 @@
-#! /bin/sh /usr/share/dpatch/dpatch-run
-## 20_fix_read_pdo_count.dpatch by  <cncmill@cncmill>
-##
-## All lines beginning with `## DP:' are a description of the patch.
-## DP: fix read-pdo error with stoeber servo amp
+0020_fix_read_pdo_count.dpatch by  <cncmill@cncmill>
 
-@DPATCH@
+fix read-pdo error with stoeber servo amp
 
 diff -urNp ethercat-1.5.1.orig/master/fsm_pdo_entry.c ethercat-1.5.1/master/fsm_pdo_entry.c
 --- ethercat-1.5.1.orig/master/fsm_pdo_entry.c	2012-01-10 13:03:28.000000000 +0100

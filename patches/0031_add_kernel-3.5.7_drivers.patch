@@ -1,10 +1,5 @@
-#! /bin/sh /usr/share/dpatch/dpatch-run
-## 31_add_kernel-3.5.7_drivers.dpatch by  <linuxcnc@cncmill2>
-##
-## All lines beginning with `## DP:' are a description of the patch.
-## DP: No description.
+0031_add_kernel-3.5.7_drivers.patch by  <linuxcnc@cncmill2>
 
-@DPATCH@
 diff -urNad '--exclude=CVS' '--exclude=.svn' '--exclude=.git' '--exclude=.arch' '--exclude=.hg' '--exclude=_darcs' '--exclude=.bzr' ethercat-1.5.2~/devices/8139too-3.5-ethercat.c ethercat-1.5.2/devices/8139too-3.5-ethercat.c
 --- ethercat-1.5.2~/devices/8139too-3.5-ethercat.c	1970-01-01 01:00:00.000000000 +0100
 +++ ethercat-1.5.2/devices/8139too-3.5-ethercat.c	2013-08-22 21:37:26.111639000 +0200

@@ -9,6 +9,8 @@ This patch replaces the '--with-rtai-dir' argument with
 headers relative to an 'RTAI_DIR', grabs the entire list of kbuild
 EXTRA_CFLAGS from `rtai-config`.
 
+signed off by John Morris <john@zultron.com>
+
 diff -up ./configure.ac.rtai_headers_dir ./configure.ac
 --- ./configure.ac.rtai_headers_dir	2014-07-03 22:20:04.000000000 -0500
 +++ ./configure.ac	2014-07-04 00:17:40.457203792 -0500
