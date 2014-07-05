@@ -1,4 +1,3 @@
-lib/modules/@KERNEL_VERSION@/ethercat
 etc/default/*
 etc/udev/rules.d/*
 usr/bin/*

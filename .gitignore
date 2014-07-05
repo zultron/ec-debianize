@@ -4,16 +4,20 @@
 /tmp/
 /*debhelper.log
 /files
+/module_packages/
 
-/ethercat-dev/
-/ethercat-dev.install
-/ethercat-dev.substvars
-/ethercat-dev.links
+/igh-ethercat-dev/
+/igh-ethercat-dev.substvars
+/igh-ethercat-dev.links
 
-/ethercat/
-/ethercat.install
-/ethercat.substvars
-/ethercat.postinst
-/ethercat.postinst.debhelper
-/ethercat.postrm.debhelper
-/ethercat.prerm
+/igh-ethercat/
+/igh-ethercat.substvars
+/igh-ethercat.postinst
+/igh-ethercat.postinst.debhelper
+/igh-ethercat.postrm.debhelper
+/igh-ethercat.prerm
+
+/igh-ethercat-modules-*/
+/igh-ethercat-modules-*.install
+/igh-ethercat-modules-*.postinst
+/igh-ethercat-modules-*.prerm

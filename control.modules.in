@@ -1,0 +1,5 @@
+Package: igh-ethercat-modules-@LINUX_UTSNAME@
+Architecture: any
+Depends: igh-ethercat, linux-image-@LINUX_UTSNAME@
+Description: IgH EtherCAT master ethernet NIC drivers
+
