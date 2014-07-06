@@ -1,4 +1,3 @@
-/rules
 /control
 /patched/
 /tmp/
@@ -21,3 +20,5 @@
 /igh-ethercat-modules-*.install
 /igh-ethercat-modules-*.postinst
 /igh-ethercat-modules-*.prerm
+/igh-ethercat-modules-*.debhelper
+/igh-ethercat-modules-*.substvars
