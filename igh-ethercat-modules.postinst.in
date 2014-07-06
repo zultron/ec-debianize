@@ -1,8 +1,7 @@
 #!/bin/sh
 set -e
+#DEBHELPER#
 if [ "$1" = "configure" ] ; then
-  depmod -a
   update-ethercat-config
 fi
-#DEBHELPER#
 exit 0
