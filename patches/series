@@ -1,4 +1,3 @@
 0010_fix_distclean.patch
-0020_fix_read_pdo_count.patch
 0040_RTAI_module_cflags.patch
 0050_install_headers.patch
