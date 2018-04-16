@@ -32,7 +32,7 @@ check_headers() {
     fi
 
     LINUX_UTSNAME=`$CC -E -dM ${VERSION_FILE} 2>/dev/null | \
-	grep UTS | cut -d '"' -f 2`
+	grep UTS_RELEASE | cut -d '"' -f 2`
 
     # Echo utsname for scripts that use it
     echo $LINUX_UTSNAME
@@ -161,7 +161,6 @@ render_module_packages() {
 render_rules() {
     local UTSNAME
     echo "ALL_UTSNAMES='${ALL_UTSNAMES}'" > $CONFIG_DIR/base
-    render_file $DIR/rules.in base > $DIR/rules
 }
 
 usage() {
