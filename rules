@@ -16,8 +16,8 @@ endif
 MAKEFLAGS += $(PARALLEL)
 
 CONFIGURE_OPTS = --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
-	--enable-8139too --enable-e100 --enable-e1000 --enable-e1000e \
-	--enable-r8169
+	--disable-8139too --disable-e100 --disable-e1000 --disable-e1000e \
+	--disable-r8169
 
 MODPKG_NAME = igh-ethercat-modules
 ALL_UTSNAMES = $(shell \
@@ -31,7 +31,7 @@ configure: configure-stamp
 configure-stamp:
 	dh_testdir
 	test -e configure || ./bootstrap
-	./configure \
+	./configure --disable-kernel \
 	    $(CONFIGURE_OPTS)
 	touch $@
 
