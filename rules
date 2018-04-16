@@ -30,7 +30,7 @@ BUILD_MODULE_STAMPS = $(foreach u,$(ALL_UTSNAMES),build-stamp-$(u))
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-	test -e configure || ./bootstrap.sh
+	test -e configure || ./bootstrap
 	./configure \
 	    $(CONFIGURE_OPTS)
 	touch $@
