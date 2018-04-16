@@ -5,6 +5,8 @@
 /.debhelper/
 /files
 /module_packages/
+/build-stamp*
+/configure-stamp
 
 /igh-ethercat-dev/
 /igh-ethercat-dev.substvars

@@ -25,23 +25,23 @@ ALL_UTSNAMES = $(shell \
 	sub("$(MODPKG_NAME)-","",$$2); print $$2 }' \
 	debian/control)
 
-BUILD_MODULE_STAMPS = $(foreach u,$(ALL_UTSNAMES),build-stamp-$(u))
+BUILD_MODULE_STAMPS = $(foreach u,$(ALL_UTSNAMES),debian/build-stamp-$(u))
 
-configure: configure-stamp
-configure-stamp:
+configure: debian/configure-stamp
+debian/configure-stamp:
 	dh_testdir
 	test -e configure || ./bootstrap
 	./configure --disable-kernel \
 	    $(CONFIGURE_OPTS)
 	touch $@
 
-build-stamp: configure-stamp
+debian/build-stamp: debian/configure-stamp
 	dh_testdir
 	$(MAKE) all
 	touch $@
 
 $(BUILD_MODULE_STAMPS): UTSNAME=$*
-$(BUILD_MODULE_STAMPS): build-stamp-%: build-stamp
+$(BUILD_MODULE_STAMPS): debian/build-stamp-%: debian/build-stamp
 	dh_testdir
 	./configure \
 		$(CONFIGURE_OPTS) \
@@ -53,12 +53,12 @@ $(BUILD_MODULE_STAMPS): build-stamp-%: build-stamp
 
 	touch $@
 
-build: build-stamp $(BUILD_MODULE_STAMPS)
+build: debian/build-stamp $(BUILD_MODULE_STAMPS)
 
 clean:
 	dh_testdir
 	dh_testroot
-	rm -f configure-stamp build-stamp build-stamp-*
+	rm -f debian/configure-stamp debian/build-stamp debian/build-stamp-*
 	[ ! -f Makefile ] || $(MAKE) distclean || true  # breaks
 	dh_clean
 
