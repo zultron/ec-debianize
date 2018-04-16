@@ -1,7 +1,4 @@
 0010_fix_distclean.patch
 0020_fix_read_pdo_count.patch
-0030_fix_r8169-3.4-ethercat_typo.patch
-0031_add_kernel-3.5.7_drivers.patch
-0032_add_kernel-3.8.13_drivers.patch
 0040_RTAI_module_cflags.patch
 0050_install_headers.patch
