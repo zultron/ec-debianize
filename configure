@@ -148,7 +148,7 @@ render_module_packages() {
     local UTSNAME
     for UTSNAME in $ALL_UTSNAMES; do
 	log "Rendering package files for kernel utsname '${UTSNAME}'"
-	render_file $DIR/igh-ethercat-modules.install.in $UTSNAME >> \
+	render_file $DIR/igh-ethercat-modules.install.in $UTSNAME > \
 	    $DIR/igh-ethercat-modules-$UTSNAME.install
 	cp $DIR/igh-ethercat-modules.postinst.in \
 	    $DIR/igh-ethercat-modules-$UTSNAME.postinst
