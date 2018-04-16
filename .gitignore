@@ -2,6 +2,7 @@
 /patched/
 /tmp/
 /*debhelper.log
+/.debhelper/
 /files
 /module_packages/
 
