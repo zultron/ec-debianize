@@ -1,6 +1,6 @@
-etc/default/*
+etc/ethercat.conf
 etc/udev/rules.d/*
 usr/bin/*
 usr/sbin/*
 usr/lib/*.so*
-
+lib/systemd/system/ethercat.service

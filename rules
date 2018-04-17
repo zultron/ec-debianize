@@ -68,8 +68,8 @@ install: build
 	dh_installdirs
 	$(MAKE) DESTDIR=$(TMPDIR) install
 
-	rm -f $(TMPDIR)/usr/sbin/ethercatctl 
-	mv $(TMPDIR)/etc/sysconfig $(TMPDIR)/etc/default
+	mv $(TMPDIR)/usr/lib/systemd $(TMPDIR)/lib # Debian systemd unit file dir
+	rm -r $(TMPDIR)/etc/sysconfig
 
 	cp -a debian/extras/* $(TMPDIR)
 	dh_install --sourcedir=$(TMPDIR)

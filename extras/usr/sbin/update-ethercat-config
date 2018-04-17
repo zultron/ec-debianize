@@ -7,7 +7,7 @@ MODLIST=/etc/modules
 
 #------------------------------------------------------------------------------
 
-ETHERCAT_CONFIG=/etc/default/ethercat
+ETHERCAT_CONFIG=/etc/ethercat.conf
 
 MODPROBE_FLAGS=""
 
