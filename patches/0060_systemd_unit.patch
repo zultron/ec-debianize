@@ -1,0 +1,33 @@
+Systemd unit file updates
+
+- Assume generic network driver
+- Correct service dependencies:  `network.service` isn't standard
+
+signed off by John Morris <john@zultron.com>
+
+
+Index: etherlabmaster/script/ethercat.service.in
+===================================================================
+--- etherlabmaster.orig/script/ethercat.service.in	2018-04-17 13:27:29.144697300 -0500
++++ etherlabmaster/script/ethercat.service.in	2018-04-19 12:12:48.670238855 -0500
+@@ -9,15 +9,17 @@
+ # Uncomment this, if the generic Ethernet driver is used. It assures, that the
+ # network interfaces are configured, before the master starts.
+ #
+-#Requires=network.service # Stop master, if network is stopped
+-#After=network.service # Start master, after network is ready
++# Stop master, if network is stopped
++Requires=network.target
++# Start master, after network is ready
++After=network.target
+ 
+ #
+ # Uncomment this, if a native Ethernet driver is used. It assures, that the
+ # network interfaces are configured, after the Ethernet drivers have been
+ # replaced. Otherwise, the networking configuration tools could be confused.
+ #
+-#Before=network.service
++#Before=network.target
+ 
+ [Service]
+ Type=oneshot

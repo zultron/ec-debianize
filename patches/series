@@ -1,3 +1,4 @@
 0010_fix_distclean.patch
 0040_RTAI_module_cflags.patch
 0050_install_headers.patch
+0060_systemd_unit.patch

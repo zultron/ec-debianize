@@ -70,10 +70,8 @@ install: build
 
         # Fix Debian systemd unit file directory path
 	mv $(TMPDIR)/usr/lib/systemd $(TMPDIR)/lib
-        # Assume generic ethernet driver and fix systemd targets
-	sed -i $(TMPDIR)/lib/systemd/system/ethercat.service \
-	    -e '/^#\(Requires\|After\)/ s/^.//' \
-	    -e 's/network\.service/network.target/'
+
+        # Remove RedHat-specific directory
 	rm -r $(TMPDIR)/etc/sysconfig
 
 	cp -a debian/extras/* $(TMPDIR)
