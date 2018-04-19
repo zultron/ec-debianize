@@ -11,10 +11,11 @@ EXTRA_CFLAGS from `rtai-config`.
 
 signed off by John Morris <john@zultron.com>
 
-diff -up ./configure.ac.rtai_headers_dir ./configure.ac
---- ./configure.ac.rtai_headers_dir	2014-07-03 22:20:04.000000000 -0500
-+++ ./configure.ac	2014-07-04 00:17:40.457203792 -0500
-@@ -486,36 +486,37 @@ AC_SUBST(KERNEL_R8169,[$kernel_r8169])
+Index: etherlabmaster/configure.ac
+===================================================================
+--- etherlabmaster.orig/configure.ac	2018-04-19 12:07:41.480120727 -0500
++++ etherlabmaster/configure.ac	2018-04-19 12:07:41.472120779 -0500
+@@ -569,36 +569,37 @@
  # RTAI path (optional)
  #------------------------------------------------------------------------------
  
@@ -66,10 +67,11 @@ diff -up ./configure.ac.rtai_headers_dir ./configure.ac
  AM_CONDITIONAL(ENABLE_RTAI, test "x$rtai" = "x1")
  AC_SUBST(ENABLE_RTAI,[$rtai])
  
-diff -up ./examples/dc_rtai/Kbuild.in.rtai_headers_dir ./examples/dc_rtai/Kbuild.in
---- ./examples/dc_rtai/Kbuild.in.rtai_headers_dir	2014-07-04 00:05:59.325203207 -0500
-+++ ./examples/dc_rtai/Kbuild.in	2014-07-04 00:14:08.773203615 -0500
-@@ -35,7 +35,7 @@ obj-m := ec_dc_rtai_sample.o
+Index: etherlabmaster/examples/dc_rtai/Kbuild.in
+===================================================================
+--- etherlabmaster.orig/examples/dc_rtai/Kbuild.in	2018-04-19 12:07:41.480120727 -0500
++++ etherlabmaster/examples/dc_rtai/Kbuild.in	2018-04-19 12:07:41.472120779 -0500
+@@ -35,7 +35,7 @@
  
  ec_dc_rtai_sample-objs := dc_rtai_sample.o
  
@@ -78,10 +80,11 @@ diff -up ./examples/dc_rtai/Kbuild.in.rtai_headers_dir ./examples/dc_rtai/Kbuild
  
  KBUILD_EXTRA_SYMBOLS := \
  	@abs_top_builddir@/$(LINUX_SYMVERS) \
-diff -up ./examples/rtai/Kbuild.in.rtai_headers_dir ./examples/rtai/Kbuild.in
---- ./examples/rtai/Kbuild.in.rtai_headers_dir	2014-07-04 00:04:54.329203153 -0500
-+++ ./examples/rtai/Kbuild.in	2014-07-04 00:14:23.445203627 -0500
-@@ -35,7 +35,7 @@ obj-m := ec_rtai_sample.o
+Index: etherlabmaster/examples/rtai/Kbuild.in
+===================================================================
+--- etherlabmaster.orig/examples/rtai/Kbuild.in	2018-04-19 12:07:41.480120727 -0500
++++ etherlabmaster/examples/rtai/Kbuild.in	2018-04-19 12:07:41.472120779 -0500
+@@ -35,7 +35,7 @@
  
  ec_rtai_sample-objs := rtai_sample.o
  
@@ -90,10 +93,11 @@ diff -up ./examples/rtai/Kbuild.in.rtai_headers_dir ./examples/rtai/Kbuild.in
  
  KBUILD_EXTRA_SYMBOLS := \
  	@abs_top_builddir@/$(LINUX_SYMVERS) \
-diff -up ./master/Kbuild.in.rtai_headers_dir ./master/Kbuild.in
---- ./master/Kbuild.in.rtai_headers_dir	2014-07-03 22:20:14.000000000 -0500
-+++ ./master/Kbuild.in	2014-07-04 00:14:34.309203637 -0500
-@@ -89,7 +89,7 @@ CFLAGS_rtdm.o := -I@XENOMAI_DIR@/include
+Index: etherlabmaster/master/Kbuild.in
+===================================================================
+--- etherlabmaster.orig/master/Kbuild.in	2018-04-19 12:07:41.480120727 -0500
++++ etherlabmaster/master/Kbuild.in	2018-04-19 12:07:41.472120779 -0500
+@@ -89,7 +89,7 @@
  endif
  
  ifeq (@ENABLE_RTAI@, 1)
