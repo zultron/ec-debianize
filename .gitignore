@@ -14,7 +14,6 @@
 
 /igh-ethercat/
 /igh-ethercat.substvars
-/igh-ethercat.postinst
 /igh-ethercat.postinst.debhelper
 /igh-ethercat.postrm.debhelper
 /igh-ethercat.prerm

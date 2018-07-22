@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e
+
+action="$1"
+oldversion="$2"
+
+umask 022
+
+if [ "$action" = configure ]; then
+    addgroup --system --quiet ethercat
+fi
+
+exit 0
