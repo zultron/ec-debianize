@@ -11,7 +11,7 @@ Replaces: ethercat, etherlabmaster
 Conflicts: ethercat, etherlabmaster
 Provides: ethercat, etherlabmaster
 Architecture: any
-Depends: ${shlibs:Depends}, dkms
+Depends: ${shlibs:Depends}, ${misc:Depends}, dkms, jq
 Description: IgH EtherCAT master for Linux
 
 Package: etherlabmaster-dev
