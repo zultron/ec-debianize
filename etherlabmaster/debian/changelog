@@ -48,4 +48,3 @@ etherlabmaster (1.5.1-1) lucid; urgency=low
   * fixed read-pdo-count for stoeber servo drive
 
  -- Sascha Ittner <sascha.ittner@modusoft.de>  Mon, 19 Mar 2012 13:06:05 +0100
-

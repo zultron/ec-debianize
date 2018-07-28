@@ -5,6 +5,7 @@
 /*.changes
 /*.orig.tar.gz
 /*.debian.tar.xz
+/.ethercat/
 /etherlabmaster/*
 !/etherlabmaster/debian/
 /etherlabmaster/debian/etherlabmaster*/
@@ -16,4 +17,3 @@
 /etherlabmaster/debian/autoreconf.*
 /etherlabmaster/debian/files
 /etherlabmaster/debian/.pc/
-
