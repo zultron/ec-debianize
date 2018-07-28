@@ -14,7 +14,8 @@ default:
 	echo "$(VERSION)"
 
 %:
-	dh $@ --with autoreconf,dkms
+	dh $@ --with autoreconf,dkms,systemd
+
 
 override_dh_autoreconf:
 	touch ChangeLog
@@ -29,6 +30,9 @@ override_dh_auto_configure:
 		$(CONFFLAGS)
 
 override_dh_install:
+	rm -rf debian/tmp/usr/lib/x86_64-linux-gnu/systemd
+	rm -rf debian/tmp/etc/init.d
+
 	mkdir -p debian/tmp/usr/src/etherlabmaster-$(VERSION)/patches
 	cp debian/dkms-patches/pre-4.18-rc6-setup_timer.diff \
 	  debian/tmp/usr/src/etherlabmaster-$(VERSION)/patches/pre-4.18-rc6-setup_timer.diff
@@ -39,6 +43,10 @@ override_dh_install:
 	dh_install -petherlabmaster -X.o -X.ko -XMakefile -X.in -X.am examples/ include/ master/ tty/ usr/src/etherlabmaster-$(VERSION)
 	dh_install -petherlabmaster -X.o -X.ko -XMakefile -X.in -X.am -X-orig.c \
 	    devices/* usr/src/etherlabmaster-$(VERSION)/devices
+
+override_dh_systemd_enable:
+	dh_systemd_enable --name=ethercat
+	dh_systemd_enable --name=ethercat-native --no-enable
 
 override_dh_dkms:
 	dh_dkms -V $(VERSION)

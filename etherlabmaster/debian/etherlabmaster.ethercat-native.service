@@ -1,0 +1,21 @@
+#
+# EtherCAT master kernel modules, native Ethernet drivers
+#
+
+[Unit]
+Description=EtherCAT Master Kernel Modules
+
+#
+# Start the master *before* network interfaces are configured when
+# using native Ethernet drivers
+#
+Before=network.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/ethercatctl start
+ExecStop=/usr/sbin/ethercatctl stop
+
+[Install]
+WantedBy=multi-user.target

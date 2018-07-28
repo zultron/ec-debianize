@@ -1,0 +1,22 @@
+#
+# EtherCAT master kernel modules, generic Ethernet driver
+#
+
+[Unit]
+Description=EtherCAT Master Kernel Modules
+
+#
+# Start the master *after* network interfaces are configured when
+# using the generic Ethernet driver
+#
+Requires=network.service # Stop master, if network is stopped
+After=network.service # Start master, after network is ready
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/ethercatctl start
+ExecStop=/usr/sbin/ethercatctl stop
+
+[Install]
+WantedBy=multi-user.target
