@@ -6,7 +6,9 @@ if [ "$1" = "remove" ] ; then
       rmmod $mod
     fi
   done
-  cat /proc/modules | grep -q "^ec_master" && rmmod ec_master
+  if cat /proc/modules | grep -q "^ec_master"; then
+      rmmod ec_master
+  fi
 fi
 #DEBHELPER#
 exit 0
