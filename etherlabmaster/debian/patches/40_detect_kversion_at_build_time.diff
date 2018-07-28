@@ -1,0 +1,178 @@
+The `configure` script sets the kernel `Kbuild` files at configure
+time (using kversion read from kernel source tree).
+
+This breaks dkms when the version changes, since it will try to build
+the native NIC sources for the version set at configure time rather
+than for the version of the target kernel source.
+
+This patch replaces the hard-coded version with the version detected
+in the kernel headers.
+
+diff --git a/devices/Kbuild.in b/devices/Kbuild.in
+index 9488a4c..2bc3e88 100644
+--- a/devices/Kbuild.in
++++ b/devices/Kbuild.in
+@@ -45,7 +45,7 @@ ifeq (@ENABLE_GENERIC@,1)
+ endif
+
+ ifeq (@ENABLE_8139TOO@,1)
+-	EC_8139TOO_OBJ := 8139too-@KERNEL_8139TOO@-ethercat.o
++	EC_8139TOO_OBJ := 8139too-$(VERSION).$(PATCHLEVEL)-ethercat.o
+ 	obj-m += ec_8139too.o
+ 	ec_8139too-objs := $(EC_8139TOO_OBJ)
+ 	CFLAGS_$(EC_8139TOO_OBJ) = -DREV=$(REV)
+@@ -56,7 +56,7 @@ ifeq (@ENABLE_CCAT@,1)
+ endif
+
+ ifeq (@ENABLE_E100@,1)
+-	EC_E100_OBJ := e100-@KERNEL_E100@-ethercat.o
++	EC_E100_OBJ := e100-$(VERSION).$(PATCHLEVEL)-ethercat.o
+ 	obj-m += ec_e100.o
+ 	ec_e100-objs := $(EC_E100_OBJ)
+ 	CFLAGS_$(EC_E100_OBJ) = -DREV=$(REV)
+@@ -79,7 +79,7 @@ ifeq (@ENABLE_CX2100@,1)
+ endif
+
+ ifeq (@ENABLE_R8169@,1)
+-	EC_R8169_OBJ := r8169-@KERNEL_R8169@-ethercat.o
++	EC_R8169_OBJ := r8169-$(VERSION).$(PATCHLEVEL)-ethercat.o
+ 	obj-m += ec_r8169.o
+ 	ec_r8169-objs := $(EC_R8169_OBJ)
+ 	CFLAGS_$(EC_R8169_OBJ) = -DREV=$(REV)
+diff --git a/devices/cx2100/Kbuild.in b/devices/cx2100/Kbuild.in
+index b939291..46df70d 100644
+--- a/devices/cx2100/Kbuild.in
++++ b/devices/cx2100/Kbuild.in
+@@ -48,10 +48,10 @@ REV := $(shell if test -s $(TOPDIR)/revision; then \
+
+ ifeq (@ENABLE_CX2100@,1)
+ 	EC_CX2100_OBJ := \
+-		cx2100-@KERNEL_CX2100@-ethercat.o
++		cx2100-$(VERSION).$(PATCHLEVEL)-ethercat.o
+ 	obj-m += ec_cx2100.o
+ 	ec_cx2100-objs := $(EC_CX2100_OBJ)
+-	CFLAGS_cx2100-@KERNEL_CX2100@-ethercat.o = -DREV=$(REV)
++	CFLAGS_cx2100-$(VERSION).$(PATCHLEVEL)-ethercat.o = -DREV=$(REV)
+ endif
+
+ KBUILD_EXTRA_SYMBOLS := \
+diff --git a/devices/e1000/Kbuild.in b/devices/e1000/Kbuild.in
+index 0878f05..c04308f 100644
+--- a/devices/e1000/Kbuild.in
++++ b/devices/e1000/Kbuild.in
+@@ -41,13 +41,13 @@ REV := $(shell if test -s $(TOPDIR)/revision; then \
+
+ ifeq (@ENABLE_E1000@,1)
+ 	EC_E1000_OBJ := \
+-		e1000_main-@KERNEL_E1000@-ethercat.o \
+-		e1000_hw-@KERNEL_E1000@-ethercat.o \
+-		e1000_ethtool-@KERNEL_E1000@-ethercat.o \
+-		e1000_param-@KERNEL_E1000@-ethercat.o
++		e1000_main-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++		e1000_hw-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++		e1000_ethtool-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++		e1000_param-$(VERSION).$(PATCHLEVEL)-ethercat.o
+ 	obj-m += ec_e1000.o
+ 	ec_e1000-objs := $(EC_E1000_OBJ)
+-	CFLAGS_e1000_main-@KERNEL_E1000@-ethercat.o = -DREV=$(REV)
++	CFLAGS_e1000_main-$(VERSION).$(PATCHLEVEL)-ethercat.o = -DREV=$(REV)
+ endif
+
+ KBUILD_EXTRA_SYMBOLS := \
+diff --git a/devices/e1000e/Kbuild.in b/devices/e1000e/Kbuild.in
+index c09673f..9fa2446 100644
+--- a/devices/e1000e/Kbuild.in
++++ b/devices/e1000e/Kbuild.in
+@@ -41,40 +41,40 @@ REV := $(shell if test -s $(TOPDIR)/revision; then \
+
+ ifeq (@ENABLE_E1000E@,1)
+ 	EC_E1000E_OBJ := \
+-		82571-@KERNEL_E1000E@-ethercat.o \
+-		ethtool-@KERNEL_E1000E@-ethercat.o \
+-		ich8lan-@KERNEL_E1000E@-ethercat.o \
+-		netdev-@KERNEL_E1000E@-ethercat.o \
+-		param-@KERNEL_E1000E@-ethercat.o \
+-		phy-@KERNEL_E1000E@-ethercat.o
++		82571-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++		ethtool-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++		ich8lan-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++		netdev-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++		param-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++		phy-$(VERSION).$(PATCHLEVEL)-ethercat.o
+
+ 	ifeq (@E1000E_LAYOUT@,2)
+ 		EC_E1000E_OBJ += \
+-			80003es2lan-@KERNEL_E1000E@-ethercat.o \
+-			mac-@KERNEL_E1000E@-ethercat.o \
+-			manage-@KERNEL_E1000E@-ethercat.o \
+-			nvm-@KERNEL_E1000E@-ethercat.o \
+-			ptp-@KERNEL_E1000E@-ethercat.o
++			80003es2lan-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++			mac-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++			manage-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++			nvm-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++			ptp-$(VERSION).$(PATCHLEVEL)-ethercat.o
+ 	endif
+
+ 	ifeq (@E1000E_LAYOUT@,1)
+ 		EC_E1000E_OBJ += \
+-			80003es2lan-@KERNEL_E1000E@-ethercat.o \
+-			mac-@KERNEL_E1000E@-ethercat.o \
+-			manage-@KERNEL_E1000E@-ethercat.o \
+-			nvm-@KERNEL_E1000E@-ethercat.o
++			80003es2lan-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++			mac-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++			manage-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++			nvm-$(VERSION).$(PATCHLEVEL)-ethercat.o
+ 	endif
+
+ 	ifeq (@E1000E_LAYOUT@,0)
+ 		EC_E1000E_OBJ += \
+-			es2lan-@KERNEL_E1000E@-ethercat.o \
+-			lib-@KERNEL_E1000E@-ethercat.o
++			es2lan-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++			lib-$(VERSION).$(PATCHLEVEL)-ethercat.o
+ 	endif
+
+ 	obj-m += ec_e1000e.o
+ 	ec_e1000e-objs := $(EC_E1000E_OBJ)
+
+-	CFLAGS_netdev-@KERNEL_E1000E@-ethercat.o = -DREV=$(REV)
++	CFLAGS_netdev-$(VERSION).$(PATCHLEVEL)-ethercat.o = -DREV=$(REV)
+ endif
+
+ KBUILD_EXTRA_SYMBOLS := \
+diff --git a/devices/igb/Kbuild.in b/devices/igb/Kbuild.in
+index 616a9c2..fc9f992 100644
+--- a/devices/igb/Kbuild.in
++++ b/devices/igb/Kbuild.in
+@@ -43,18 +43,18 @@ ifeq (@ENABLE_IGB@,1)
+ 	obj-m += ec_igb.o
+
+ 	ec_igb-objs := \
+-		e1000_82575-@KERNEL_IGB@-ethercat.o \
+-		e1000_i210-@KERNEL_IGB@-ethercat.o \
+-		e1000_mac-@KERNEL_IGB@-ethercat.o \
+-		e1000_mbx-@KERNEL_IGB@-ethercat.o \
+-		e1000_nvm-@KERNEL_IGB@-ethercat.o \
+-		e1000_phy-@KERNEL_IGB@-ethercat.o \
+-		igb_ethtool-@KERNEL_IGB@-ethercat.o \
+-		igb_hwmon-@KERNEL_IGB@-ethercat.o \
+-		igb_main-@KERNEL_IGB@-ethercat.o \
+-		igb_ptp-@KERNEL_IGB@-ethercat.o
++		e1000_82575-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++		e1000_i210-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++		e1000_mac-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++		e1000_mbx-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++		e1000_nvm-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++		e1000_phy-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++		igb_ethtool-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++		igb_hwmon-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++		igb_main-$(VERSION).$(PATCHLEVEL)-ethercat.o \
++		igb_ptp-$(VERSION).$(PATCHLEVEL)-ethercat.o
+
+-	CFLAGS_igb_main-@KERNEL_IGB@-ethercat.o = -DREV=$(REV)
++	CFLAGS_igb_main-$(VERSION).$(PATCHLEVEL)-ethercat.o = -DREV=$(REV)
+ endif
+
+ KBUILD_EXTRA_SYMBOLS := \

@@ -1,0 +1,26 @@
+`timer_setup` replaced `setup_timer` in 4.18-rc6; revert to build modules for 4.9.
+
+https://github.com/torvalds/linux/commit/e99e88a9d2b067465adaa9c111ada99a041bef9a
+
+diff --git a/examples/mini/mini.c b/examples/mini/mini.c
+index d355693..168fd52 100644
+--- a/examples/mini/mini.c
++++ b/examples/mini/mini.c
+@@ -307,7 +307,7 @@ void read_voe(void)
+ 
+ /*****************************************************************************/
+ 
+-static void cyclic_task(struct timer_list *t)
++static void cyclic_task(unsigned long unused)
+ {
+     // receive process data
+     down(&master_sem);
+@@ -492,7 +492,7 @@ int __init init_mini_module(void)
+ #endif
+ 
+     printk(KERN_INFO PFX "Starting cyclic sample thread.\n");
+-    timer_setup(&timer, cyclic_task, 0);
++    setup_timer(&timer, cyclic_task, 0);
+     timer.expires = jiffies + 10;
+     add_timer(&timer);
+ 

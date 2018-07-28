@@ -3,7 +3,11 @@
 VERSION ?= $(shell dpkg-parsechangelog | sed -rne 's/^Version: ([0-9.]+(\+[0-9]*hg[0-9a-z]*)?).*$$/\1/p')
 
 ifeq ($(DEB_HOST_ARCH_OS),linux)
-	CONFFLAGS += --enable-kernel --enable-generic --enable-ccat --disable-8139too --disable-e100 --disable-e1000 --disable-e1000e --disable-r8169 --enable-sii-assign --enable-hrtimer
+	CONFFLAGS += --enable-kernel --enable-generic --enable-ccat \
+	    --enable-8139too --enable-e100 --enable-e1000 --enable-e1000e \
+	    --enable-r8169 --enable-igb --enable-cx2100 --enable-sii-assign \
+	    --enable-hrtimer \
+	    --with-linux-dir=debian/bogus-ksrc
 endif
 
 default:
@@ -25,12 +29,16 @@ override_dh_auto_configure:
 		$(CONFFLAGS)
 
 override_dh_install:
+	mkdir -p debian/tmp/usr/src/etherlabmaster-$(VERSION)/patches
+	cp debian/dkms-patches/pre-4.18-rc6-setup_timer.diff \
+	  debian/tmp/usr/src/etherlabmaster-$(VERSION)/patches/pre-4.18-rc6-setup_timer.diff
+
 	dh_install --list-missing
 
 	dh_install -petherlabmaster config.h globals.h Kbuild usr/src/etherlabmaster-$(VERSION)
 	dh_install -petherlabmaster -X.o -X.ko -XMakefile -X.in -X.am examples/ include/ master/ tty/ usr/src/etherlabmaster-$(VERSION)
-	dh_install -petherlabmaster devices/Kbuild devices/ecdev.h devices/generic.c usr/src/etherlabmaster-$(VERSION)/devices
-	dh_install -petherlabmaster -X.o -X.ko -XMakefile -X.in -X.am devices/ccat/ usr/src/etherlabmaster-$(VERSION)/devices
+	dh_install -petherlabmaster -X.o -X.ko -XMakefile -X.in -X.am -X-orig.c \
+	    devices/* usr/src/etherlabmaster-$(VERSION)/devices
 
 override_dh_dkms:
 	dh_dkms -V $(VERSION)

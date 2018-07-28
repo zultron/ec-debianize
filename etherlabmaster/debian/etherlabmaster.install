@@ -3,4 +3,4 @@ etc/sysconfig/* etc/default/
 usr/bin/*
 usr/sbin/*
 usr/lib/*/*.so*
-
+usr/src/etherlabmaster-*/patches/*

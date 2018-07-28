@@ -4,14 +4,18 @@
 PACKAGE_NAME="etherlabmaster"
 PACKAGE_VERSION="#MODULE_VERSION#"
 
-BUILT_MODULE_NAME[0]="master/ec_master"
-DEST_MODULE_NAME[0]="ec_master"
-DEST_MODULE_LOCATION[0]="/updates/dkms"
-
 AUTOINSTALL=yes
 
 MAKE[0]="make -C \${kernel_source_dir} M=$dkms_tree/$PACKAGE_NAME/$PACKAGE_VERSION/build modules"
 CLEAN="make -C \${kernel_source_dir} M=$dkms_tree/$PACKAGE_NAME/$PACKAGE_VERSION/build clean"
+
+# Revert timer_setup() changes for pre-4.18 kernels
+PATCH[0]="pre-4.18-rc6-setup_timer.diff"
+PATCH_MATCH[3]='^\(3\|4\.\([0-9]\|1[0-7]\)\)\.'
+
+BUILT_MODULE_NAME[0]="master/ec_master"
+DEST_MODULE_NAME[0]="ec_master"
+DEST_MODULE_LOCATION[0]="/updates/dkms"
 
 BUILT_MODULE_NAME[1]="devices/ccat/ec_ccat"
 DEST_MODULE_NAME[1]="ec_ccat"
@@ -25,3 +29,37 @@ BUILT_MODULE_NAME[3]="examples/mini/ec_mini"
 DEST_MODULE_NAME[3]="ec_mini"
 DEST_MODULE_LOCATION[3]="/updates/dkms"
 
+BUILT_MODULE_NAME[4]="devices/ec_8139too"
+DEST_MODULE_NAME[4]="ec_8139too"
+DEST_MODULE_LOCATION[4]="/updates/dkms"
+BUILD_EXCLUSIVE_KERNEL[4]='^\(3\.\([02468]\|1[02468]\)\|4\.\([149]\|13\)\)\.'
+
+BUILT_MODULE_NAME[5]="devices/ec_e100"
+DEST_MODULE_NAME[5]="ec_e100"
+DEST_MODULE_LOCATION[5]="/updates/dkms"
+BUILD_EXCLUSIVE_KERNEL[5]='^\(3\.\([0468]\|1[02468]\)\|4\.\([149]\|13\)\)\.'
+
+BUILT_MODULE_NAME[6]="devices/ec_r8169"
+DEST_MODULE_NAME[6]="ec_r8169"
+DEST_MODULE_LOCATION[6]="/updates/dkms"
+BUILD_EXCLUSIVE_KERNEL[6]='^\(3\.\([2468]\|1[02468]\)\|4\.\([149]\|13\)\)\.'
+
+BUILT_MODULE_NAME[7]="devices/e1000/ec_e1000"
+DEST_MODULE_NAME[7]="ec_e1000"
+DEST_MODULE_LOCATION[7]="/updates/dkms"
+BUILD_EXCLUSIVE_KERNEL[7]='^\(3\.\([0468]\|1[02468]\)\|4\.\([149]\|13\)\)\.'
+
+BUILT_MODULE_NAME[8]="devices/e1000e/ec_e1000e"
+DEST_MODULE_NAME[8]="ec_e1000e"
+DEST_MODULE_LOCATION[8]="/updates/dkms"
+BUILD_EXCLUSIVE_KERNEL[8]='^\(3\.\([468]\|1[02468]\)\|4\.\([149]\|13\)\)\.'
+
+BUILT_MODULE_NAME[9]="devices/igb/ec_igb"
+DEST_MODULE_NAME[9]="ec_igb"
+DEST_MODULE_LOCATION[9]="/updates/dkms"
+BUILD_EXCLUSIVE_KERNEL[9]='^\(3\.18\|4\.\([149]\|13\)\)\.'
+
+BUILT_MODULE_NAME[10]="devices/cx2100/ec_cx2100"
+DEST_MODULE_NAME[10]="ec_cx2100"
+DEST_MODULE_LOCATION[10]="/updates/dkms"
+BUILD_EXCLUSIVE_KERNEL[10]='^4\.9\.'
