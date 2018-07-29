@@ -1,3 +1,18 @@
+etherlabmaster (1.5.2+20180508gitc8d0140-1) stretch; urgency=low
+
+  * added non-generic network driver compiles to dkms
+  * switched to git with Gavin Lambert's unofficial patchset,
+    enabling non-generic driver builds against official Debian RT
+    kernel v. 4.9; see https://github.com/ribalda/ethercat
+  * un-hardcoded kernel version in dkms sources so dkms can build native
+    drivers for any supported kernel version
+  * added patch to mini.c so it can be built for pre-4.18 kernels
+  * added kernel version regexes to match native drivers
+  * installed /etc/ethercat.conf, wanted by ethercatctl and systemd units
+  * added systemd service files
+
+ -- John Morris <john@zultron.com>  Fri, 27 Jul 2018 19:08:17 -0500
+
 etherlabmaster (1.5.2+20180317hg9e65f7-2) lucid; urgency=low
 
   * fixed quilt usage
