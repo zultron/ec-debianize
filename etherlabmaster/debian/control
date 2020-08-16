@@ -2,7 +2,10 @@ Source: etherlabmaster
 Section: misc
 Priority: extra
 Maintainer: Sascha Ittner <sascha.ittner@modusoft.de>
-Build-Depends: debhelper (>> 4.0.0), dkms, gettext, autoconf, automake, libtool, quilt
+Build-Depends: debhelper (>> 4.0.0), dkms, gettext, autoconf, automake, libtool, quilt,
+  libc6, libstdc++6,
+  linux-headers-generic | linux-headers-amd64:native |
+  linux-headers-i386:native | linux-headers-arm64:native | linux-headers-armhf:native
 Standards-Version: 2.1.0
 
 Package: etherlabmaster
