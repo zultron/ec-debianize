@@ -18,3 +18,13 @@
 /etherlabmaster/debian/files
 /etherlabmaster/debian/.pc/
 
+/etherlabmaster_*.build
+/etherlabmaster-*.deb
+/etherlabmaster-*.ddeb
+/etherlabmaster-hg/
+
+/clone/
+
+__pycache__
+
+/.github/local-env.yaml

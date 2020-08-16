@@ -1,0 +1,89 @@
+# Package name
+package: etherlabmaster
+
+# Project name for human-readable output
+projectName: EtherLab Master
+
+# Package-specific command to run during image build before installing
+#    build deps (default: none)
+scriptPreCmd: .github/docker/etherlabmaster_script_pre.sh
+
+# Package-specific command to run during image build after installing
+#    build deps (default: none)
+scriptPostCmd: .github/docker/etherlabmaster_script_post.sh
+
+# Package-specific command to run in container before package build
+#    (default: none)
+configureSourceCmd: .github/docker/etherlabmaster_configure_source.sh
+
+# Location of `debian/` packaging directory (default: `debian`)
+debian_dir: etherlabmaster/debian
+
+# Docker image name and tag template (default:
+#    `@PACKAGE@-@DISTRIBUTION@-builder` and `@RELEASE@_@ARCHITECTURE@`)
+#
+# DANGER: Changing imageNameFmt or imageTagFmt will mean a new Docker
+#    image name!  Public Docker images in GitHub Packages cannot be
+#    deleted, every change will stay visible 'forever' in form of old
+#    packages
+#
+#imageNameFmt: @PACKAGE@-@VENDOR@-builder
+#imageTagFmt: @RELEASE@_@ARCHITECTURE@
+
+# Docker image label prefix (default: `io.machinekit.${{package}}`)
+#label_prefix: io.machinekit.etherlabmaster
+
+# Non-standard package subdirectory (default: `.`)
+sourceDir: etherlabmaster
+
+# Cloudsmith repo slug, if not the same as `package`
+#cloudsmith_repo_slug: etherlabmaster
+
+osDistros:
+  # List of Debian and Ubuntu OS version configuration data
+  - baseImage: debian:stretch
+    codename: Stretch
+    vendor: Debian
+    release: 9
+  - baseImage: debian:buster
+    codename: Buster
+    vendor: Debian
+    release: 10
+  - baseImage: debian:bullseye
+    codename: Bullseye
+    vendor: Debian
+    release: 11
+  - baseImage: ubuntu:focal
+    codename: Focal
+    vendor: Ubuntu
+    release: 20.04
+
+allowedCombinations:
+  # Supported combinations of `release` : architecture
+  #
+  # amd64:
+  - architecture: amd64
+    release: 9
+  - architecture: amd64
+    release: 10
+  - architecture: amd64
+    release: 20.04
+  # arm64:
+  - architecture: arm64
+    release: 9
+  - architecture: arm64
+    release: 10
+  - architecture: arm64
+    release: 20.04
+  # armhf:
+  - architecture: armhf
+    release: 9
+  - architecture: armhf
+    release: 10
+  - architecture: armhf
+    release: 20.04
+  # i386:  (discontinued in Ubuntu Focal)
+  - architecture: i386
+    release: 9
+  - architecture: i386
+    release: 10
