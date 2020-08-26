@@ -8,6 +8,7 @@
 /etherlabmaster/*
 !/etherlabmaster/debian/
 /etherlabmaster/debian/etherlabmaster*/
+/etherlabmaster/debian/libethercat/
 /etherlabmaster/debian/tmp/
 /etherlabmaster/debian/*.log
 /etherlabmaster/debian/*.substvars

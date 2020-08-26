@@ -8,12 +8,18 @@ Build-Depends: debhelper (>> 4.0.0), dkms, gettext, autoconf, automake, libtool,
   linux-headers-i386:native | linux-headers-arm64:native | linux-headers-armhf:native
 Standards-Version: 2.1.0
 
+Package: libethercat
+Architecture: any
+Multi-Arch: same
+Depends: ${shlibs:Depends}
+Description: IgH EtherCAT master for Linux shared libraries
+
 Package: etherlabmaster
 Replaces: ethercat, etherlabmaster
 Conflicts: ethercat, etherlabmaster
 Provides: ethercat, etherlabmaster
 Architecture: any
-Depends: ${shlibs:Depends}, dkms, procps, ifupdown
+Depends: ${shlibs:Depends}, libethercat, dkms, procps, ifupdown
 Description: IgH EtherCAT master for Linux
 
 Package: etherlabmaster-dev
@@ -21,6 +27,6 @@ Replaces: ethercat-dev, etherlabmaster-dev
 Conflicts: ethercat-dev, etherlabmaster-dev
 Provides: ethercat-dev, etherlabmaster-dev
 Architecture: any
-Depends: etherlabmaster
+Multi-Arch: foreign
+Depends: libethercat
 Description: IgH EtherCAT master for Linux (development files)
-
