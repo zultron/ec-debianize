@@ -1,3 +1,12 @@
+etherlabmaster (1.5.2+20190904hg33b922p8ea394-2) lucid; urgency=low
+
+  * Add GitHub Actions CI workflow:  machinekit_ci
+  * Split out libethercat package for Multi-Arch: & cross-builds
+  * Fix build deps for cross-build and kernel headers
+  * Break up get_source.sh functions and add command-line args
+
+ -- John Morris <john@zultron.com>  Wed, 26 Aug 2020 21:52:07 +0000
+
 etherlabmaster (1.5.2+20190904hg33b922p8ea394-1) lucid; urgency=low
 
   * updated to patchset 20190904
