@@ -1,3 +1,4 @@
 debian/extras/* /
 etc/sysconfig/* etc/default/
 usr/sbin/*
+lib/systemd/system/ethercat.service

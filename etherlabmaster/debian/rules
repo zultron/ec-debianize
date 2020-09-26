@@ -20,7 +20,7 @@ default:
 	echo "$(VERSION)"
 
 %:
-	dh $@ --with autoreconf,dkms
+	dh $@ --with autoreconf,dkms,systemd
 
 override_dh_autoreconf:
 	touch ChangeLog
@@ -35,6 +35,13 @@ override_dh_auto_configure:
 		$(CONFFLAGS)
 
 override_dh_install:
+        # Systemd
+	mkdir -p debian/tmp/lib
+	mv debian/tmp/usr/lib/*/systemd debian/tmp/lib/
+	dh_systemd_enable --name=ethercat
+	dh_installinit --name=ethercat
+	dh_systemd_start
+
 	dh_install --list-missing
 
 	dh_install -petherlabmaster config.h globals.h Kbuild usr/src/etherlabmaster-$(VERSION)
