@@ -2,6 +2,14 @@
 
 VERSION ?= $(shell dpkg-parsechangelog | sed -rne 's/^Version: ([0-9.]+(\+[0-9]*hg[0-9a-z]*)?).*$$/\1/p')
 
+include /usr/share/dpkg/architecture.mk
+HEADERS = $(shell /bin/ls -d \
+	/usr/src/linux-headers-*-generic \
+	/usr/src/linux-headers-*-$(DEB_BUILD_ARCH) 2>/dev/null \
+	| head -1)
+ifneq (,$(HEADERS))
+CONFFLAGS += --with-linux-dir=$(HEADERS)
+endif
 CONFFLAGS += --disable-eoe --enable-sii-assign
 
 ifeq ($(DEB_HOST_ARCH_OS),linux)

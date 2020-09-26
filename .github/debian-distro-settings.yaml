@@ -8,10 +8,6 @@ projectName: EtherLab Master
 #    build deps (default: none)
 scriptPreCmd: .github/docker/etherlabmaster_script_pre.sh
 
-# Package-specific command to run during image build after installing
-#    build deps (default: none)
-scriptPostCmd: .github/docker/etherlabmaster_script_post.sh
-
 # Package-specific command to run in container before package build
 #    (default: none)
 configureSourceCmd: .github/docker/etherlabmaster_configure_source.sh
