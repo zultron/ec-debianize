@@ -22,7 +22,7 @@ Usage: $0 [-C] [-c] [-x] [-a]
     -C:  Clean up "etherlabmaster" directory
     -c:  Clone upscream repositories and apply patchsets
     -x:  Extract sources into "etherlabmaster" directory & create source tarball
-    -a:  All (except clone); like "-Ccx"
+    -a:  All; like "-Ccx"
     -h:  This help message
 EOF
     exit $RC
