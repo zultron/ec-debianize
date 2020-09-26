@@ -2,3 +2,4 @@
 20_fix_read_pdo_count.diff
 30_relax_al_state_change_timeout.diff
 40_safe_rt_mutex_enable.patch
+50-Update-ethercat-config-path.patch

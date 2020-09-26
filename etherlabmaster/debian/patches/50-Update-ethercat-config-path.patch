@@ -1,0 +1,26 @@
+From 3521c4eaa6fb38baa562fcb2b64f02de73548a2a Mon Sep 17 00:00:00 2001
+From: John Morris <john@zultron.com>
+Date: Sat, 26 Sep 2020 15:06:58 -0500
+Subject: [PATCH] Update ethercat config path
+
+Packaging puts it in `/etc/default/ethercat`, not `/etc/ethercat.conf`
+---
+ script/ethercatctl.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/script/ethercatctl.in b/script/ethercatctl.in
+index 0fd4419..2ddd578 100755
+--- a/script/ethercatctl.in
++++ b/script/ethercatctl.in
+@@ -42,7 +42,7 @@ ETHERCAT=@prefix@/bin/ethercat
+ 
+ #------------------------------------------------------------------------------
+ 
+-ETHERCAT_CONFIG=/etc/ethercat.conf
++ETHERCAT_CONFIG=/etc/default/ethercat
+ 
+ if [ ! -r ${ETHERCAT_CONFIG} ]; then
+     echo ${ETHERCAT_CONFIG} not existing;
+-- 
+2.7.4
+
