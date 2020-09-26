@@ -1,4 +1,3 @@
 debian/extras/* /
 etc/sysconfig/* etc/default/
-usr/bin/*
 usr/sbin/*
