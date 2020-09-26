@@ -42,7 +42,12 @@ override_dh_install:
 	dh_installinit --name=ethercat
 	dh_systemd_start
 
-	dh_install --list-missing
+        # Clean up and check for omissions
+	rm -f	debian/tmp/etc/ethercat.conf \
+		debian/tmp/etc/init.d/ethercat \
+		debian/tmp/usr/lib/*/libethercat.a \
+		debian/tmp/usr/lib/*/libethercat.la
+	dh_install --fail-missing
 
 	dh_install -petherlabmaster config.h globals.h Kbuild usr/src/etherlabmaster-$(VERSION)
 	dh_install -petherlabmaster -X.o -X.ko -XMakefile -X.in -X.am examples/ include/ master/ tty/ usr/src/etherlabmaster-$(VERSION)
