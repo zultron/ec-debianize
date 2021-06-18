@@ -25,6 +25,34 @@ BUILT_MODULE_NAME[3]="examples/mini/ec_mini"
 DEST_MODULE_NAME[3]="ec_mini"
 DEST_MODULE_LOCATION[3]="/updates/dkms"
 
+BUILT_MODULE_NAME[4]="devices/igb/ec_igb"
+DEST_MODULE_NAME[4]="ec_igb"
+DEST_MODULE_LOCATION[4]="/updates/dkms"
+
+BUILT_MODULE_NAME[5]="devices/e1000/ec_e1000"
+DEST_MODULE_NAME[5]="ec_e1000"
+DEST_MODULE_LOCATION[5]="/updates/dkms"
+
+BUILT_MODULE_NAME[6]="devices/e1000e/ec_e1000e"
+DEST_MODULE_NAME[6]="ec_e1000e"
+DEST_MODULE_LOCATION[6]="/updates/dkms"
+
+BUILT_MODULE_NAME[7]="devices/ec_e100"
+DEST_MODULE_NAME[7]="ec_e100"
+DEST_MODULE_LOCATION[7]="/updates/dkms"
+
+BUILT_MODULE_NAME[8]="devices/ec_8139too"
+DEST_MODULE_NAME[8]="ec_8139too"
+DEST_MODULE_LOCATION[8]="/updates/dkms"
+
+# FIXME 4.19 doesn't exist for r8169 or r8152
+# BUILT_MODULE_NAME[9]="devices/ec_r8169"
+# DEST_MODULE_NAME[9]="ec_r8169"
+# DEST_MODULE_LOCATION[9]="/updates/dkms"
+
+# BUILT_MODULE_NAME[10]="devices/ec_r8152"
+# DEST_MODULE_NAME[10]="ec_r8152"
+# DEST_MODULE_LOCATION[10]="/updates/dkms"
+
 POST_BUILD="postbld \${kernel_source_dir} $dkms_tree/$PACKAGE_NAME/$PACKAGE_VERSION/build"
 POST_REMOVE="postrm \${kernel_source_dir} $dkms_tree/$PACKAGE_NAME/$PACKAGE_VERSION/build"
-

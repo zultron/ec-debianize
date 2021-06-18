@@ -13,7 +13,11 @@ endif
 CONFFLAGS += --disable-eoe --enable-sii-assign
 
 ifeq ($(DEB_HOST_ARCH_OS),linux)
-	CONFFLAGS += --enable-kernel --enable-generic --enable-ccat --disable-8139too --disable-e100 --disable-e1000 --disable-e1000e --disable-r8169 --enable-hrtimer --enable-rtmutex
+	CONFFLAGS += --enable-kernel --enable-generic --enable-ccat \
+	    --enable-8139too --enable-e100 --enable-e1000 --enable-e1000e \
+	    --enable-igb --enable-hrtimer --enable-rtmutex
+#	FIXME  Doesn't exist for 4.19
+	CONFFLAGS += --disable-r8169 --disable-r8152
 endif
 
 default:
@@ -50,10 +54,9 @@ override_dh_install:
 	dh_install --fail-missing
 
 	dh_install -petherlabmaster config.h globals.h Kbuild usr/src/etherlabmaster-$(VERSION)
-	dh_install -petherlabmaster -X.o -X.ko -XMakefile -X.in -X.am examples/ include/ master/ tty/ usr/src/etherlabmaster-$(VERSION)
+	dh_install -petherlabmaster -X.o -X.ko -XMakefile -X.in -X.am \
+	    examples/ include/ master/ tty/ devices/ usr/src/etherlabmaster-$(VERSION)
 	dh_install -petherlabmaster debian/dkms/* usr/src/etherlabmaster-$(VERSION)
-	dh_install -petherlabmaster devices/Kbuild devices/ecdev.h devices/generic.c usr/src/etherlabmaster-$(VERSION)/devices
-	dh_install -petherlabmaster -X.o -X.ko -XMakefile -X.in -X.am devices/ccat/ usr/src/etherlabmaster-$(VERSION)/devices
 
 override_dh_dkms:
 	dh_dkms -V $(VERSION)
