@@ -1,0 +1,10 @@
+#                                     -*-dockerfile-*-
+COPY etherlabmaster/debian /tmp/build/debian
+
+RUN apt-get update \
+    && apt-get install -y \
+        devscripts equivs mercurial
+
+RUN apt-get update \
+    && cd /tmp/build \
+    && echo y | mk-build-deps -i

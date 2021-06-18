@@ -1,0 +1,14 @@
+#                                                        -*- shell-script -*-
+# Rocker config for Buster etherlabmaster
+
+# Docker image to build/run
+ROCKER_IMAGE_TAG=rocker:buster-ec
+
+# Docker base image for overlay
+ROCKER_BASE_IMAGE=debian:buster
+
+# Docker container name+hostname
+ROCKER_NAME=ec
+
+# Load Docker context
+ROCKER_LOAD_CONTEXT=true
